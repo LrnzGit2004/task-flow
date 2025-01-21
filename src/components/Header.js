@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Text, View, Image, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  Platform,
+  StatusBar,
+} from "react-native";
 
 export class Header extends Component {
   render() {
@@ -38,7 +45,6 @@ export class Header extends Component {
         <Text style={[{ color: "#686BA4", fontSize: 15, fontWeight: 600 }]}>
           v 1.0.1
         </Text>
-        
       </View>
     );
   }
@@ -47,16 +53,12 @@ export class Header extends Component {
 const styles = StyleSheet.create({
   logoHeader: {
     padding: 20,
-    paddingTop: 0,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     fontFamily: "Outfit",
-    //borderBottomWidth:0.2,
-    //shadowOpacity: 0.2,
-    //shadowColor: "#000",
-    //shadowOffset: {width:0, height:0},
-    //elevation: 1,
+    backgroundColor: "white",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   headerText: {
     flexDirection: "row",

@@ -1,34 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import * as Progress from "react-native-progress";
+import { TaskContext } from "../../TaskContext";
 
 const ProgressSection = () => {
-  const [progress, setProgress] = useState(0);
+  const { tasks } = useContext(TaskContext);
 
-  //   useEffect(() => {
-  //     const interval = setInterval(() => {
-  //       setProgress((prevProgress) => {
-  //         if (prevProgress >= 1) {
-  //           clearInterval(interval); // Arrête l'intervalle quand la progression est terminée
-  //           return 1;
-  //         }
-  //         return prevProgress + 0.1;
-  //       });
-  //     }, 1000); // Met à jour la progression toutes les secondes
+  // Compter les tâches complétées
+  const completedTasks = tasks.filter(
+    (task) => task.status === "completed"
+  ).length;
+  const totalTasks = tasks.length;
 
-  //     return () => clearInterval(interval); // Nettoyer l'intervalle lors du démontage du composant
-  //   }, []);
+  // Calculer la progression
+  const progressPercentage = totalTasks > 0 ? completedTasks / totalTasks : 0;
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.text, { fontSize: 18, fontWeight: 500 }]}>
+      <Text style={[styles.text, { fontSize: 18, fontWeight: "500" }]}>
         Progression totale des tâches
       </Text>
-      <Text style={[styles.text]}>Complétées : 0/0</Text>
-      <Text style={[styles.text, { marginBottom: 2 }]}>
-        {Math.floor(progress * 100)}%
+      <Text style={styles.text}>
+        Complétées : {completedTasks}/{totalTasks}
       </Text>
-      <Progress.Bar progress={progress} style={styles.progress} />
+      <Text style={[styles.text, { marginBottom: 2 }]}>
+        {Math.floor(progressPercentage * 100)}%
+      </Text>
+      <Progress.Bar
+        progress={progressPercentage}
+        width={null}
+        height={14}
+        borderRadius={20}
+        color="#39f329"
+        unfilledColor="#f9f9f9"
+        borderWidth={0}
+        style={styles.progress}
+      />
     </View>
   );
 };
@@ -39,8 +46,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#4B53FF",
     borderRadius: 10,
     padding: 30,
-    paddingTop:15,
-    paddingBottom:20,
+    paddingTop: 15,
+    paddingBottom: 20,
     fontFamily: "Outfit",
   },
   text: {
@@ -49,11 +56,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   progress: {
-    width: "auto",
+    width: "100%",
     height: 13,
-    borderRadius:20,
-    backgroundColor: "#8F90A4"
-  }
+    borderRadius: 20,
+  },
 });
 
 export default ProgressSection;
