@@ -32,16 +32,19 @@ export const TaskProvider = ({ children }) => {
   };
 
   // Ajouter une tâche
-  // let taskIdCounter = 1;
-
   const addTask = (task) => {
-    const newTask = { ...task, id: Date.now().toString() }; // ID unique basé sur un compteur
+    const newTask = {
+      ...task,
+      id: Date.now().toString(),
+      statut: 0
+      
+    }; // ID unique basé sur un la date actuelle en TimeStamp
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
     saveTasks(updatedTasks);
   };
 
-  // Modifier une tâche
+  //Modifier une tâche
   // const editTask = (id, updatedTask) => {
   //   const updatedTasks = tasks.map((task) =>
   //     task.id === id ? { ...task, ...updatedTask } : task
@@ -63,7 +66,18 @@ export const TaskProvider = ({ children }) => {
       task.id === id
         ? {
             ...task,
-            status: task.status === "in_progress" ? "completed" : "in_progress",
+            statut: task.statut === 0 ? 1 : 0,
+          }
+        : task
+    );
+    setTasks(updatedTasks); // Met à jour l'état des tâches
+    saveTasks(updatedTasks); // Sauvegarde les nouvelles données
+  };
+  const TaskDetails = (id) => {
+    const readTaskDetails = tasks.map((task) =>
+      task.id === id
+        ? {
+            ...task
           }
         : task
     );

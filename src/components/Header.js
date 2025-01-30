@@ -8,47 +8,32 @@ import {
   StatusBar,
 } from "react-native";
 
-export class Header extends Component {
-  render() {
-    return (
-      <View style={styles.logoHeader}>
-        <View style={[{ flexDirection: "row", alignItems: "center" }]}>
-          <Image
-            style={{ width: 55, height: 55 }}
-            source={require("../../assets/images/logo_icon.png")}
-          />
-          <View>
-            <View style={styles.headerText}>
-              <Text style={styles.textLogo}>Task</Text>
-              <Text
-                style={[
-                  styles.textLogo,
-                  {
-                    color: "#2731FF",
-                  },
-                ]}
-              >
-                Flow
-              </Text>
-            </View>
-            <Text
-              style={[
-                { color: "#686BA4" },
-                { paddingLeft: 5 },
-                { fontSize: 12 },
-              ]}
-            >
-              Eliminez le chaos, suivez le flux !
-            </Text>
+const Header = () => {
+  return (
+    <View style={styles.logoHeader}>
+      <View style={[{ flexDirection: "row", alignItems: "center" }]}>
+        <Image
+          style={{ width: 55, height: 55 }}
+          source={require("../../assets/images/logo_icon.png")}
+        />
+        <View>
+          <View style={styles.headerText}>
+            <Text style={styles.textLogo}>Task</Text>
+            <Text style={[styles.textLogo, { color: "#2731FF" }]}>Flow</Text>
           </View>
+          <Text
+            style={[{ color: "#686BA4" }, { paddingLeft: 5 }, { fontSize: 12 }]}
+          >
+            Eliminez le chaos, suivez le flux !
+          </Text>
         </View>
-        <Text style={[{ color: "#686BA4", fontSize: 15, fontWeight: 600 }]}>
-          v 1.0.1
-        </Text>
       </View>
-    );
-  }
-}
+      <Text style={[{ color: "#686BA4", fontSize: 15, fontWeight: 600 }]}>
+        v 1.1.3
+      </Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   logoHeader: {
