@@ -4,7 +4,7 @@ import ProgressSection from "../components/ProgressSection";
 import { TaskContext } from "../../TaskContext";
 import TaskItem from "../components/TaskItem";
 import EmptyTaskList from "../components/EmptyTaskList";
-import TaskDetails from "../components/TaskDetails";
+//import TaskDetails from "../components/TaskDetails";
 
 const HomeScreen = ({ navigation }) => {
   const { tasks } = useContext(TaskContext);
@@ -75,15 +75,15 @@ const HomeScreen = ({ navigation }) => {
           </>
         )}
       </View>
-      {/* <FlatList
+      <FlatList
         data={tasks}
         scrollEnabled
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <TaskItem task={item} />}
         ListEmptyComponent={<EmptyTaskList />}
         style={{ backgroundColor: "#f1f2fe" }}
-      /> */}
-      <TaskDetails/>
+      />
+      {/* <TaskDetails/> */}
       <View
         style={{
           paddingRight: 20,
