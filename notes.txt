@@ -1,0 +1,104 @@
+import React from "react";
+import { Modal, View, Text, TouchableOpacity, TouchableWithoutFeedback, StyleSheet } from "react-native";
+
+const TaskModal = ({ task, modalVisible, setModalVisible }) => {
+  return (
+    <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
+      <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+        <View style={styles.overlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.title}>{task.title}</Text>
+            <Text style={styles.description}>
+              {task.description.length > 30 ? task.description.substring(0, 30) + "..." : task.description}
+            </Text>
+            
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateLabel}>Début prévu le :</Text>
+              <Text style={styles.dateValue}>le {task.startDate}</Text>
+            </View>
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateLabel}>Fin prévue le :</Text>
+              <Text style={styles.dateValue}>le {task.endDate}</Text>
+            </View>
+
+            <Text style={styles.footer}>Powered by TaskFlow {"\n"} Éliminez le Chaos, Suivez le Flux</Text>
+
+            <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>Fermer</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
+  );
+};
+
+const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContainer: {
+    width: "85%",
+    backgroundColor: "#F7F7FF",
+    borderRadius: 15,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
+    borderWidth: 2,
+    borderColor: "#6A5ACD",
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#1E1E1E",
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 16,
+    color: "#333",
+    textAlign: "center",
+    marginBottom: 15,
+  },
+  dateContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    marginVertical: 5,
+  },
+  dateLabel: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#222",
+  },
+  dateValue: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#222",
+  },
+  footer: {
+    fontSize: 14,
+    color: "#666",
+    textAlign: "center",
+    marginTop: 20,
+  },
+  closeButton: {
+    marginTop: 15,
+    backgroundColor: "#6A5ACD",
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  closeButtonText: {
+    fontSize: 16,
+    color: "#FFF",
+    fontWeight: "bold",
+  },
+});
+
+export default TaskModal;

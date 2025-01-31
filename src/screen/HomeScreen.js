@@ -1,14 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Text, View, Image, TouchableOpacity, FlatList } from "react-native";
 import ProgressSection from "../components/ProgressSection";
 import { TaskContext } from "../../TaskContext";
 import TaskItem from "../components/TaskItem";
 import EmptyTaskList from "../components/EmptyTaskList";
-//import TaskDetails from "../components/TaskDetails";
 
 const HomeScreen = ({ navigation }) => {
   const { tasks } = useContext(TaskContext);
-  const completedTasks = tasks.filter((task) => task.statut === 1).length;
+
+  const [filter, setFilter] = useState(null); // Nouveau state pour le filtre
+
+  // Fonction pour filtrer les tâches
+  const filteredTasks = filter
+    ? tasks.filter((task) => task.statut === filter)
+    : tasks;
+
+  // Fonction pour gérer le changement de filtre
+  const toggleFilter = (status) => {
+    if (filter === status) {
+      setFilter(null); // Réinitialise le filtre si le même bouton est cliqué
+    } else {
+      setFilter(status); // Applique le filtre
+    }
+  };
+
+  // Messages personnalisés pour les tâches filtrées
+  const noTasksMessage =
+    filter === 0
+      ? "Vous n'avez pas de tâches en cours"
+      : "Pas de tâches terminées";
 
   return (
     <View style={{ flex: 1 }}>
@@ -31,12 +51,13 @@ const HomeScreen = ({ navigation }) => {
               Filtrer par :
             </Text>
             <View style={{ flexDirection: "row", gap: 5 }}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
+                onPress={() => toggleFilter(0)}
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
                   gap: 5,
-                  backgroundColor: "#fff1d7",
+                  backgroundColor: filter === 0 ? "#ffeb99" : "#fff1d7", // Change color if selected
                   paddingHorizontal: 10,
                   paddingVertical: 10,
                   borderRadius: 12,
@@ -50,13 +71,14 @@ const HomeScreen = ({ navigation }) => {
                   style={{ width: 20, height: 20, borderRadius: 50 }}
                   source={require("../../assets/images/progress_icon.png")}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity
+                onPress={() => toggleFilter(1)}
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
                   gap: 5,
-                  backgroundColor: "#deffd5",
+                  backgroundColor: filter === 1 ? "#b7f7c3" : "#deffd5",
                   paddingHorizontal: 10,
                   paddingVertical: 10,
                   borderRadius: 12,
@@ -75,15 +97,26 @@ const HomeScreen = ({ navigation }) => {
           </>
         )}
       </View>
+
+      {/* Affichage des messages personnalisés si aucune tâche ne correspond au filtre */}
+      {filteredTasks.length === 0 && filter !== null && (
+        <View style={{ padding: 20 }}>
+          <Text style={{ fontSize: 16, textAlign: "center", color: "#777" }}>
+            {noTasksMessage}
+          </Text>
+        </View>
+      )}
+
+      {/* Affichage des tâches filtrées */}
       <FlatList
-        data={tasks}
+        data={filteredTasks}
         scrollEnabled
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <TaskItem task={item} />}
-        ListEmptyComponent={<EmptyTaskList />}
+        ListEmptyComponent={tasks.length === 0 && <EmptyTaskList />}
         style={{ backgroundColor: "#f1f2fe" }}
       />
-      {/* <TaskDetails/> */}
+
       <View
         style={{
           paddingRight: 20,
