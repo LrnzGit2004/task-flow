@@ -37,13 +37,15 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   logoHeader: {
-    padding: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     fontFamily: "Outfit",
     backgroundColor: "white",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    paddingTop: 0,
+    // paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   headerText: {
     flexDirection: "row",
